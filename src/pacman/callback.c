@@ -153,8 +153,8 @@ static int64_t get_update_timediff(int first_call)
 static void fill_progress(const int bar_percent, const int disp_percent,
 		const int proglen)
 {
-	/* 8 = 1 space + 1 [ + 1 ] + 5 for percent */
-	const int hashlen = proglen > 8 ? proglen - 8 : 0;
+	/* 6 = 1 space + 5 for percent */
+	const int hashlen = proglen > 6 ? proglen - 6 : 0;
 	const int hash = bar_percent * hashlen / 100;
 	int i;
 
@@ -163,7 +163,6 @@ static void fill_progress(const int bar_percent, const int disp_percent,
 		for(i = hashlen; i > 0; --i) {
 			if(i > hashlen - hash) {
 				if (i == hashlen) {
-					// Start
 					fputs("\uEE03", stdout);
 				} else if (i == 1) {
 					fputs("\uEE05", stdout);
@@ -172,7 +171,6 @@ static void fill_progress(const int bar_percent, const int disp_percent,
 				}
 			} else {
 				if (i == hashlen) {
-					// Start
 					fputs("\uEE00", stdout);
 				} else if (i == 1) {
 					fputs("\uEE02", stdout);
