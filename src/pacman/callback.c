@@ -159,31 +159,28 @@ static void fill_progress(const int bar_percent, const int disp_percent,
 	int i;
 
 	if(hashlen > 0) {
-		fputs(" [", stdout);
+		fputs(" ", stdout);
 		for(i = hashlen; i > 0; --i) {
-			/* if special progress bar enabled */
-			if(config->chomp) {
-				if(i > hashlen - hash) {
-					putchar('-');
-				} else if(i == hashlen - hash) {
-					if(i % 2 == 0) {
-						fputs("\033[1;33mC\033[m", stdout);
-					} else {
-						fputs("\033[1;33mc\033[m", stdout);
-					}
-				} else if(i % 3 == 0) {
-					fputs("\033[0;37mo\033[m", stdout);
+			if(i > hashlen - hash) {
+				if (i == hashlen) {
+					// Start
+					fputs("\uEE03", stdout);
+				} else if (i == 1) {
+					fputs("\uEE05", stdout);
 				} else {
-					fputs("\033[0;37m \033[m", stdout);
+					fputs("\uEE04", stdout);
 				}
-			} /* else regular progress bar */
-			else if(i > hashlen - hash) {
-				putchar('#');
 			} else {
-				putchar('-');
+				if (i == hashlen) {
+					// Start
+					fputs("\uEE00", stdout);
+				} else if (i == 1) {
+					fputs("\uEE02", stdout);
+				} else {
+					fputs("\uEE01", stdout);
+				}
 			}
 		}
-		putchar(']');
 	}
 	/* print display percent after progress bar */
 	/* 5 = 1 space + 3 digits + 1 % */
